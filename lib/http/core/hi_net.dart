@@ -1,7 +1,7 @@
-import 'package:blibli/http/core/hi_adapter.dart';
-import 'package:blibli/http/core/hi_error.dart';
-import 'package:blibli/http/core/mock_adapter.dart';
-import 'package:blibli/http/request/base_request.dart';
+import '../core/hi_adapter.dart';
+import '../core/hi_error.dart';
+import '../core/mock_adapter.dart';
+import '../request/base_request.dart';
 
 class HiNet {
   static HiNet? _instance;

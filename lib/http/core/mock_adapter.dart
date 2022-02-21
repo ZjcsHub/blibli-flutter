@@ -1,5 +1,5 @@
-import 'package:blibli/http/core/hi_adapter.dart';
-import 'package:blibli/http/request/base_request.dart';
+import '../core/hi_adapter.dart';
+import '../request/base_request.dart';
 
 /// 测试适配器，mock数据
 

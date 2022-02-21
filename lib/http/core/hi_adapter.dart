@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:blibli/http/request/base_request.dart';
+import '../request/base_request.dart';
 
 abstract class HiNetAdapter {
   Future<HiNetResponse<T>> send<T>(BaseRequest request);
