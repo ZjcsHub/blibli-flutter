@@ -1,7 +1,7 @@
+import 'package:blibli/http/core/hi_error.dart';
+import 'package:blibli/http/dao/login_dao.dart';
+import 'package:blibli/page/register_page.dart';
 import 'package:flutter/material.dart';
-
-import 'http/core/hi_net.dart';
-import 'http/request/test_request.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,21 +14,24 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          // This is the theme of your application.
+          //
+          // Try running your application with "flutter run". You'll see the
+          // application has a blue toolbar. Then, without quitting the app, try
+          // changing the primarySwatch below to Colors.green and then invoke
+          // "hot reload" (press "r" in the console where you ran "flutter run",
+          // or simply save your changes to "hot reload" in a Flutter IDE).
+          // Notice that the counter didn't reset back to zero; the application
+          // is not restarted.
+          colorScheme: Theme.of(context).colorScheme.copyWith(
+                primary: Colors.white, // appbar背景颜色
+                onPrimary: Colors.black, // appbar文字颜色
+                brightness: Brightness.light,
+              ),
+        ),
+        home: RegisterPage());
   }
 }
 
@@ -54,11 +57,20 @@ class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
   void _incrementCounter() async {
-    TestRequest request = TestRequest();
-    request.add("aa", "dd");
-
-    var result = await HiNet.getInstance().fire(request);
-    print(result);
+    // TestRequest request = TestRequest();
+    // request.add("aa", "dd").add("requestPrams", "data");
+    //
+    // var result = await HiNet.getInstance().fire(request);
+    // print(result);
+    try {
+      var result = await LoginDao.login("Keats", "123456");
+      // await LoginDao.registration("keats", "123456", "1234r55", "5566");
+      print(result);
+    } on NeedAuth catch (e) {
+      print(e);
+    } on HiNetError catch (e) {
+      print(e);
+    }
 
     // setState(() {
     //   // This call to setState tells the Flutter framework that something has

@@ -1,6 +1,6 @@
+import '../core/dio_adapter.dart';
 import '../core/hi_adapter.dart';
 import '../core/hi_error.dart';
-import '../core/mock_adapter.dart';
 import '../request/base_request.dart';
 
 class HiNet {
@@ -39,18 +39,20 @@ class HiNet {
       case 403:
         throw NeedAuth(result.toString(), data: result);
       default:
-        throw HiNetError(status!, result.toString());
+        throw HiNetError(status ?? -1, result.toString());
     }
   }
 
-  Future<dynamic> send<T>(BaseRequest request) async {
+  Future<HiNetResponse> send<T>(BaseRequest request) async {
     printLog("url:${request.url()}");
     printLog("method:${request.httpMethod()}");
     request.addHeader("token", "123");
     printLog("header:${request.header}");
 
-    HiNetAdapter adapter = MockAdapter();
+    // HiNetAdapter adapter = MockAdapter();
 
+    // 使用Dio 发送请求
+    HiNetAdapter adapter = DioAdapter();
     return adapter.send(request);
   }
 
