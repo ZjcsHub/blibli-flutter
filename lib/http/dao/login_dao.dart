@@ -1,4 +1,5 @@
 // dao 用于数据操作
+import 'package:blibli/db/hi_cache.dart';
 import 'package:blibli/http/request/base_request.dart';
 import 'package:blibli/http/request/login_request.dart';
 import 'package:blibli/http/request/register_request.dart';
@@ -34,12 +35,12 @@ class LoginDao {
     print(result);
     if (result['code'] == 0 && result['data'] != null) {
       // 保存登录令牌
-      await Storage.setString(BOARDING_PASS, result['data']);
+      HiCache.getInstance().saveString(BOARDING_PASS, result['data']);
     }
     return result;
   }
 
-  static getBoardingPass() async {
-    return await Storage.getString(BOARDING_PASS);
+  static getBoardingPass() {
+    return HiCache.getInstance().getString(BOARDING_PASS);
   }
 }
