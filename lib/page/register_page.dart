@@ -1,18 +1,17 @@
 import 'package:blibli/http/core/hi_error.dart';
-import 'package:blibli/util/rotuter.dart';
+import 'package:blibli/navigator/hi_navigator.dart';
 import 'package:blibli/util/string_util.dart';
 import 'package:blibli/util/toast.dart';
 import 'package:flutter/material.dart';
-import '../widget/login_button.dart';
+
 import '../http/dao/login_dao.dart';
 import '../widget/appbar.dart';
+import '../widget/login_button.dart';
 import '../widget/login_effect.dart';
 import '../widget/login_input.dart';
 
 class RegisterPage extends StatefulWidget {
-  final VoidCallback? onJumpToLogin;
-
-  const RegisterPage({Key? key, this.onJumpToLogin}) : super(key: key);
+  const RegisterPage({Key? key}) : super(key: key);
 
   @override
   _RegisterPageState createState() => _RegisterPageState();
@@ -65,9 +64,7 @@ class _RegisterPageState extends State<RegisterPage> {
           await LoginDao.registration(userName, password, impocId, orderId);
       if (result["code"] == 0) {
         print("注册成功");
-        if (widget.onJumpToLogin != null) {
-          widget.onJumpToLogin!();
-        }
+        HiNavigator.getInstance().onJumpTo(RouteStatus.login);
       } else {
         print(result['msg']);
       }
@@ -88,7 +85,7 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   _loginAction() {
-    Navigator.pushNamed(context, login_page);
+    HiNavigator.getInstance().onJumpTo(RouteStatus.login);
   }
 
   @override

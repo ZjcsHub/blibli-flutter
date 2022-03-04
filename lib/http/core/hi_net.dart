@@ -16,7 +16,7 @@ class HiNet {
     HiNetResponse response;
     var error;
     try {
-      response = await send(request);
+      response = await _send(request);
     } on HiNetError catch (e) {
       error = e;
       response = e.data;
@@ -43,7 +43,7 @@ class HiNet {
     }
   }
 
-  Future<HiNetResponse> send<T>(BaseRequest request) async {
+  Future<HiNetResponse> _send<T>(BaseRequest request) async {
     printLog("url:${request.url()}");
     printLog("method:${request.httpMethod()}");
     request.addHeader("token", "123");

@@ -3,7 +3,7 @@ import 'package:blibli/model/video_model.dart';
 import 'package:blibli/page/home_page.dart';
 import 'package:blibli/page/video_detail_page.dart';
 import 'package:flutter/material.dart';
-import '../util/rotuter.dart';
+import "router_name.dart";
 import '../page/login_page.dart';
 import '../page/register_page.dart';
 

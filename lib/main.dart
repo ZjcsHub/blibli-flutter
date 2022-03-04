@@ -3,7 +3,6 @@ import 'package:blibli/http/dao/login_dao.dart';
 import 'package:flutter/material.dart';
 import 'navigator/hi_navigator.dart';
 import 'routers/routers.dart';
-import 'util/rotuter.dart';
 import 'db/hi_cache.dart';
 
 void main() {
