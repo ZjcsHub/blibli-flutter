@@ -1,4 +1,5 @@
 import 'package:blibli/EventBus/event_notification.dart';
+import 'package:blibli/core/hi_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import '../model/video_data_model.dart';
@@ -12,7 +13,7 @@ class HomeRecommendPage extends StatefulWidget {
   _HomeRecommendPageState createState() => _HomeRecommendPageState();
 }
 
-class _HomeRecommendPageState extends State<HomeRecommendPage>
+class _HomeRecommendPageState extends HiState<HomeRecommendPage>
     with AutomaticKeepAliveClientMixin {
   @override
   void initState() {
@@ -33,40 +34,47 @@ class _HomeRecommendPageState extends State<HomeRecommendPage>
   Widget build(BuildContext context) {
     print("绘制 home_recommend_page");
     return MediaQuery.removePadding(
-        removeTop: true,
-        context: context,
-        child: ListView(
-          children: [
-            if (!widget.bannerList.isEmpty) _banner(),
-          ],
-        ));
+        removeTop: true, context: context, child: _contentViewData());
   }
 
   _banner() {
     print("widget.bannerList:${widget.bannerList}");
-    return Padding(
-      padding: EdgeInsets.only(left: 8, right: 8, top: 8),
-      child: HiBanner(
-        widget.bannerList,
-        valueChanged: (videoModel) {
-          print("点击：${videoModel}");
-        },
-      ),
+    return HiBanner(
+      widget.bannerList,
+      valueChanged: (videoModel) {
+        print("点击：${videoModel}");
+      },
     );
   }
 
   _contentViewData() {
-    return MasonryGridView.count(
-      crossAxisCount: 2,
-      itemCount: widget.bannerList.length,
-      itemBuilder: (BuildContext context, int index) =>
-          //Container(color: Colors.blue,height:index.isEven?200:250),
-          VideoCard(
-        videoData: widget.bannerList[index],
+    return SingleChildScrollView(
+      padding: EdgeInsets.only(top: 5, left: 8, right: 8),
+      child: StaggeredGrid.count(
+        crossAxisCount: 2,
+        mainAxisSpacing: 4,
+        crossAxisSpacing: 4,
+        children: _getShowData(),
       ),
-      mainAxisSpacing: 10,
-      crossAxisSpacing: 10,
     );
+  }
+
+  List<Widget> _getShowData() {
+    List<Widget> li = [];
+    if (!widget.bannerList.isEmpty) {
+      li.add(StaggeredGridTile.count(
+          crossAxisCellCount: 2, mainAxisCellCount: 1, child: _banner()));
+      widget.bannerList.forEach((element) {
+        li.add(StaggeredGridTile.count(
+            crossAxisCellCount: 1,
+            mainAxisCellCount: 0.6,
+            child: VideoCard(
+              videoData: element,
+            )));
+      });
+    }
+
+    return li;
   }
 
   @override

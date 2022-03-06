@@ -16,10 +16,12 @@ class VideoCard extends StatelessWidget {
         }
       },
       child: Container(
-        height: 120,
-        child: Image.network(
-          this.videoData?.pic ?? "",
-          fit: BoxFit.cover,
+        // height: 100,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          image: DecorationImage(
+              image: NetworkImage(this.videoData?.pic ?? ""),
+              fit: BoxFit.cover),
         ),
       ),
     );
