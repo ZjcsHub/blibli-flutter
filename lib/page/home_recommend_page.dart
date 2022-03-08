@@ -67,7 +67,7 @@ class _HomeRecommendPageState extends HiState<HomeRecommendPage>
       widget.bannerList.forEach((element) {
         li.add(StaggeredGridTile.count(
             crossAxisCellCount: 1,
-            mainAxisCellCount: 0.6,
+            mainAxisCellCount: 0.8,
             child: VideoCard(
               videoData: element,
             )));
