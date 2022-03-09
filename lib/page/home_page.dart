@@ -2,17 +2,13 @@ import 'package:blibli/EventBus/event_notification.dart';
 import 'package:blibli/core/hi_state.dart';
 import 'package:blibli/http/dao/home_dao.dart';
 import 'package:blibli/model/video_data_model.dart';
-import 'package:blibli/model/video_model.dart';
 import 'package:blibli/navigator/hi_navigator.dart';
 import 'package:blibli/page/home_recommend_page.dart';
-import 'package:blibli/routers/router_name.dart';
 import 'package:blibli/widget/navigation_bar.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
-  final ValueChanged<VideoModel>? onJumpToDetail;
-
-  const HomePage({Key? key, this.onJumpToDetail}) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -25,34 +21,6 @@ class _HomePageState extends HiState<HomePage>
   TabController? _controller;
 
   final List<Map> _tabValues = [
-    {
-      "title": '推荐',
-      "vc": HomeRecommendPage(),
-    },
-    {
-      "title": '推荐',
-      "vc": HomeRecommendPage(),
-    },
-    {
-      "title": '推荐',
-      "vc": HomeRecommendPage(),
-    },
-    {
-      "title": '推荐',
-      "vc": HomeRecommendPage(),
-    },
-    {
-      "title": '推荐',
-      "vc": HomeRecommendPage(),
-    },
-    {
-      "title": '推荐',
-      "vc": HomeRecommendPage(),
-    },
-    {
-      "title": '推荐',
-      "vc": HomeRecommendPage(),
-    },
     {
       "title": '推荐',
       "vc": HomeRecommendPage(),

@@ -1,4 +1,5 @@
 import 'package:blibli/util/formater_util.dart';
+import 'package:blibli/util/view_util.dart';
 import 'package:flutter/material.dart';
 import '../model/video_data_model.dart';
 import 'package:transparent_image/transparent_image.dart';
@@ -45,14 +46,16 @@ class VideoCard extends StatelessWidget {
     print("size : $size");
     return Stack(
       children: [
-        FadeInImage.memoryNetwork(
-          height: size.width / 2 * 0.4,
-          // 宽度
-          width: size.width / 2,
-          placeholder: kTransparentImage,
-          image: this.videoData?.pic ?? "",
-          fit: BoxFit.cover,
-        ),
+        // FadeInImage.memoryNetwork(
+        //   height: size.width / 2 * 0.45,
+        //   // 宽度
+        //   width: size.width / 2,
+        //   placeholder: kTransparentImage,
+        //   image: this.videoData?.pic ?? "",
+        //   fit: BoxFit.cover,
+        // ),
+        cachedImage(this.videoData?.pic ?? "",
+            height: size.width / 2 * 0.45, width: size.width / 2),
         Positioned(
           child: Container(
             padding: EdgeInsets.only(left: 8, right: 8, bottom: 3, top: 5),

@@ -1,5 +1,4 @@
 import 'package:blibli/http/dao/login_dao.dart';
-import 'package:blibli/model/video_model.dart';
 import 'package:blibli/page/login_page.dart';
 import 'package:blibli/page/register_page.dart';
 import 'package:blibli/page/video_detail_page.dart';

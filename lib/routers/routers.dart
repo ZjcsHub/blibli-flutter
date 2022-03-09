@@ -1,5 +1,4 @@
 // 路由配置文件
-import 'package:blibli/model/video_model.dart';
 import 'package:blibli/page/home_page.dart';
 import 'package:blibli/page/video_detail_page.dart';
 import 'package:flutter/material.dart';

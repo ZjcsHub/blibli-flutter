@@ -20,6 +20,7 @@ class HiBanner extends StatelessWidget {
     return Container(
       height: this.bannerHeight,
       child: _banner(),
+      padding: EdgeInsets.only(bottom: 8),
     );
   }
 
