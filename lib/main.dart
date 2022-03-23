@@ -1,9 +1,12 @@
+import 'package:blibli/generated/l10n.dart';
 import 'package:blibli/http/core/hi_error.dart';
 import 'package:blibli/http/dao/login_dao.dart';
 import 'package:flutter/material.dart';
 import 'navigator/hi_navigator.dart';
 import 'routers/routers.dart';
 import 'db/hi_cache.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'internationalization/Internation.dart';
 
 void main() {
   runApp(const BiliApp());
@@ -26,7 +29,6 @@ class _BiliAppState extends State<BiliApp> {
   @override
   Widget build(BuildContext context) {
     // 定义route
-
     return FutureBuilder<HiCache>(
       builder: (BuildContext context, AsyncSnapshot<HiCache> snapshot) {
         var widget = snapshot.connectionState == ConnectionState.done
@@ -52,6 +54,17 @@ class _BiliAppState extends State<BiliApp> {
                   brightness: Brightness.light,
                 ),
           ),
+          // 国际化
+          localizationsDelegates: [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            S.delegate
+          ],
+          supportedLocales: S.delegate.supportedLocales,
+          localeResolutionCallback:
+              (Locale? locale, Iterable<Locale> supportedLocales) {
+            return locale;
+          },
         );
       },
       // 进行初始化

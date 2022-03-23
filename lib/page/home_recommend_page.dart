@@ -1,6 +1,7 @@
 import 'package:blibli/EventBus/event_notification.dart';
 import 'package:blibli/core/hi_state.dart';
 import 'package:blibli/navigator/hi_navigator.dart';
+import 'package:blibli/widget/hi_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import '../model/video_data_model.dart';
@@ -49,14 +50,19 @@ class _HomeRecommendPageState extends HiState<HomeRecommendPage>
   }
 
   _contentViewData() {
-    return SingleChildScrollView(
-      padding: EdgeInsets.only(top: 5, left: 8, right: 8),
-      child: StaggeredGrid.count(
-        crossAxisCount: 2,
-        mainAxisSpacing: 4,
-        crossAxisSpacing: 4,
-        children: _getShowData(),
+    return HiRefresh(
+      SingleChildScrollView(
+        padding: EdgeInsets.only(top: 5, left: 8, right: 8),
+        child: StaggeredGrid.count(
+          crossAxisCount: 2,
+          mainAxisSpacing: 4,
+          crossAxisSpacing: 4,
+          children: _getShowData(),
+        ),
       ),
+      valueChanged: (future) {
+        print("执行操作");
+      },
     );
     return Container(
       padding: EdgeInsets.only(left: 4, right: 4),

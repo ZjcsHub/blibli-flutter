@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:status_bar_control/status_bar_control.dart';
-
-enum StatusStyle { Light, Dark }
+import '../util/view_util.dart';
 
 class NavigationBar extends StatelessWidget {
   final StatusStyle statusStyle;
@@ -15,14 +14,14 @@ class NavigationBar extends StatelessWidget {
       {Key? key,
       this.statusStyle = StatusStyle.Dark,
       this.color = Colors.white,
-      this.height = 64,
+      this.height = 56,
       this.child,
       this.showShadow = true})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    _statusBarInit();
+    setStatusBar(color, statusStyle);
     // 状态栏高度
     var top = MediaQuery.of(context).padding.top;
     return Container(
@@ -34,9 +33,9 @@ class NavigationBar extends StatelessWidget {
         boxShadow: this.showShadow
             ? [
                 BoxShadow(
-                    color: Colors.black12,
+                    color: Colors.black26,
                     offset: Offset(0.0, 1.0), //阴影xy轴偏移量
-                    blurRadius: 1.0, //阴影模糊程度
+                    blurRadius: 5.0, //阴影模糊程度
                     spreadRadius: 2.0 //阴影扩散程度
                     )
               ]
@@ -44,13 +43,5 @@ class NavigationBar extends StatelessWidget {
       ),
       padding: EdgeInsets.only(top: top),
     );
-  }
-
-  _statusBarInit() async {
-    // 沉浸式状态栏
-    await StatusBarControl.setColor(this.color, animated: false);
-    await StatusBarControl.setStyle(this.statusStyle == StatusStyle.Dark
-        ? StatusBarStyle.DARK_CONTENT
-        : StatusBarStyle.LIGHT_CONTENT);
   }
 }

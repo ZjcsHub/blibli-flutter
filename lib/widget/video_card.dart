@@ -55,7 +55,7 @@ class VideoCard extends StatelessWidget {
         //   fit: BoxFit.cover,
         // ),
         cachedImage(this.videoData?.pic ?? "",
-            height: size.width / 2 * 0.45, width: size.width / 2),
+            height: size.width / 2 * 0.43, width: size.width / 2),
         Positioned(
           child: Container(
             padding: EdgeInsets.only(left: 8, right: 8, bottom: 3, top: 5),
@@ -120,6 +120,7 @@ class VideoCard extends StatelessWidget {
           Text(
             this.videoData?.title ?? "",
             maxLines: 2,
+            style: TextStyle(fontSize: 15),
           ),
           // _owner()
         ],

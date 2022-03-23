@@ -1,3 +1,8 @@
+import 'dart:math';
+
+import 'video_detail_model.dart';
+import 'package:date_format/date_format.dart';
+
 class VideoDataModel {
   int? code;
   String? message;
@@ -124,65 +129,86 @@ class VideoData {
     data['redirect_url'] = this.redirectUrl;
     return data;
   }
-}
 
-class Rights {
-  int? bp;
-  int? elec;
-  int? download;
-  int? movie;
-  int? pay;
-  int? hd5;
-  int? noReprint;
-  int? autoplay;
-  int? ugcPay;
-  int? isCooperation;
-  int? ugcPayPreview;
-  int? noBackground;
-
-  Rights(
-      {this.bp,
-      this.elec,
-      this.download,
-      this.movie,
-      this.pay,
-      this.hd5,
-      this.noReprint,
-      this.autoplay,
-      this.ugcPay,
-      this.isCooperation,
-      this.ugcPayPreview,
-      this.noBackground});
-
-  Rights.fromJson(Map<String, dynamic> json) {
-    bp = json['bp'];
-    elec = json['elec'];
-    download = json['download'];
-    movie = json['movie'];
-    pay = json['pay'];
-    hd5 = json['hd5'];
-    noReprint = json['no_reprint'];
-    autoplay = json['autoplay'];
-    ugcPay = json['ugc_pay'];
-    isCooperation = json['is_cooperation'];
-    ugcPayPreview = json['ugc_pay_preview'];
-    noBackground = json['no_background'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['bp'] = this.bp;
-    data['elec'] = this.elec;
-    data['download'] = this.download;
-    data['movie'] = this.movie;
-    data['pay'] = this.pay;
-    data['hd5'] = this.hd5;
-    data['no_reprint'] = this.noReprint;
-    data['autoplay'] = this.autoplay;
-    data['ugc_pay'] = this.ugcPay;
-    data['is_cooperation'] = this.isCooperation;
-    data['ugc_pay_preview'] = this.ugcPayPreview;
-    data['no_background'] = this.noBackground;
-    return data;
+  VideoData.transFrom(Related? related) {
+    aid = related?.aid.toString();
+    bvid = related?.bvid;
+    typename = related?.tname;
+    title = related?.title;
+    subtitle = related?.desc;
+    play = related?.stat?.view;
+    review = related?.stat?.reply;
+    favorites = related?.stat?.favorite;
+    author = related?.owner?.name;
+    description = related?.desc;
+    create = formatDate(
+        DateTime.fromMillisecondsSinceEpoch((related?.ctime ?? 0) * 1000),
+        [yyyy, '/', mm, '/', dd, " ", HH, ":", nn, ":", ss]);
+    pic = related?.pic;
+    coins = related?.stat?.coin;
+    duration = related?.duration.toString();
+    rights = related?.rights;
+    redirectUrl = related?.redirectUrl;
   }
 }
+
+// class Rights {
+//   int? bp;
+//   int? elec;
+//   int? download;
+//   int? movie;
+//   int? pay;
+//   int? hd5;
+//   int? noReprint;
+//   int? autoplay;
+//   int? ugcPay;
+//   int? isCooperation;
+//   int? ugcPayPreview;
+//   int? noBackground;
+//
+//   Rights(
+//       {this.bp,
+//       this.elec,
+//       this.download,
+//       this.movie,
+//       this.pay,
+//       this.hd5,
+//       this.noReprint,
+//       this.autoplay,
+//       this.ugcPay,
+//       this.isCooperation,
+//       this.ugcPayPreview,
+//       this.noBackground});
+//
+//   Rights.fromJson(Map<String, dynamic> json) {
+//     bp = json['bp'];
+//     elec = json['elec'];
+//     download = json['download'];
+//     movie = json['movie'];
+//     pay = json['pay'];
+//     hd5 = json['hd5'];
+//     noReprint = json['no_reprint'];
+//     autoplay = json['autoplay'];
+//     ugcPay = json['ugc_pay'];
+//     isCooperation = json['is_cooperation'];
+//     ugcPayPreview = json['ugc_pay_preview'];
+//     noBackground = json['no_background'];
+//   }
+//
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> data = new Map<String, dynamic>();
+//     data['bp'] = this.bp;
+//     data['elec'] = this.elec;
+//     data['download'] = this.download;
+//     data['movie'] = this.movie;
+//     data['pay'] = this.pay;
+//     data['hd5'] = this.hd5;
+//     data['no_reprint'] = this.noReprint;
+//     data['autoplay'] = this.autoplay;
+//     data['ugc_pay'] = this.ugcPay;
+//     data['is_cooperation'] = this.isCooperation;
+//     data['ugc_pay_preview'] = this.ugcPayPreview;
+//     data['no_background'] = this.noBackground;
+//     return data;
+//   }
+// }

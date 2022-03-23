@@ -4,6 +4,7 @@ import 'package:blibli/http/dao/home_dao.dart';
 import 'package:blibli/model/video_data_model.dart';
 import 'package:blibli/navigator/hi_navigator.dart';
 import 'package:blibli/page/home_recommend_page.dart';
+import 'package:blibli/widget/hi_tab.dart';
 import 'package:blibli/widget/navigation_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +16,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends HiState<HomePage>
-    with AutomaticKeepAliveClientMixin {
+    with AutomaticKeepAliveClientMixin, WidgetsBindingObserver {
   var listener;
 
   TabController? _controller;
@@ -30,6 +31,8 @@ class _HomePageState extends HiState<HomePage>
   @override
   void initState() {
     super.initState();
+    // 生命周期
+    WidgetsBinding.instance?.addObserver(this);
     this.listener = (RouteStatesInfo current, RouteStatesInfo? pre) {
       print("current:${current.page}");
       print("pre:${pre?.page}");
@@ -78,6 +81,27 @@ class _HomePageState extends HiState<HomePage>
     super.dispose();
     HiNavigator.getInstance().removeListener(this.listener);
     _controller?.dispose();
+    WidgetsBinding.instance?.removeObserver(this);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    print("生命周期变化:$state");
+    switch (state) {
+      case AppLifecycleState.inactive:
+        // 应用程序可能会被暂停
+        break;
+      case AppLifecycleState.resumed:
+        // 从后台切换到前台，应用可见
+        break;
+      case AppLifecycleState.detached:
+        // 页面不可见，后台
+        break;
+      case AppLifecycleState.paused:
+        //APP结束时调用
+        break;
+    }
   }
 
   @override
@@ -90,16 +114,9 @@ class _HomePageState extends HiState<HomePage>
         ),
         Container(
           padding: EdgeInsets.only(bottom: 8),
-          child: TabBar(
-            tabs: _tabValues.map((e) => Text(e["title"] as String)).toList(),
+          child: HiTab(
+            _tabValues.map((e) => Text(e["title"] as String)).toList(),
             controller: _controller,
-            indicatorColor: Colors.red,
-            indicatorSize: TabBarIndicatorSize.label,
-            isScrollable: true,
-            labelColor: Colors.red,
-            unselectedLabelColor: Colors.black,
-            indicatorWeight: 3,
-            labelStyle: TextStyle(fontSize: 20, height: 2),
           ),
         ),
         Flexible(
