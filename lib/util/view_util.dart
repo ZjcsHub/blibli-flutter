@@ -6,7 +6,7 @@ import 'package:status_bar_control/status_bar_control.dart';
 enum StatusStyle { Light, Dark }
 
 /// 带缓存的图片
-Widget cachedImage(String url, {double width = 100, double height = 100}) {
+Widget cachedImage(String url, {double? width, double? height}) {
   return CachedNetworkImage(
     imageUrl: url,
     width: width,
