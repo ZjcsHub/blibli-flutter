@@ -28,7 +28,7 @@ class HiNet {
     }
 
     var result = response.data;
-    printLog(result);
+    // printLog(result);
 
     var status = response.statusCode;
     switch (status) {
@@ -46,7 +46,7 @@ class HiNet {
   Future<HiNetResponse> _send<T>(BaseRequest request) async {
     printLog("url:${request.url()}");
     printLog("method:${request.httpMethod()}");
-    request.addHeader("token", "123");
+    // request.addHeader("token", "123");
     printLog("header:${request.header}");
 
     // HiNetAdapter adapter = MockAdapter();

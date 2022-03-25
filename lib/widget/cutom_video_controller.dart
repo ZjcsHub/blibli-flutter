@@ -31,13 +31,18 @@ class MaterialControls extends StatefulWidget {
   //弹幕浮层
   final Widget? barrageUI;
 
+  final VoidCallback? playClickAction;
+  final VoidCallback? pauseClickAction;
+
   const MaterialControls(
       {Key? key,
       this.showLoadingOnInitialize = true,
       this.showBigPlayIcon = true,
       this.overlayUI,
       this.bottomGradient,
-      this.barrageUI})
+      this.barrageUI,
+      this.playClickAction,
+      this.pauseClickAction})
       : super(key: key);
 
   @override
@@ -467,12 +472,15 @@ class _MaterialControlsState extends State<MaterialControls>
         _hideStuff = false;
         _hideTimer?.cancel();
         controller!.pause();
+        if (widget.pauseClickAction != null) widget.pauseClickAction!();
       } else {
         _cancelAndRestartTimer();
 
         if (!controller!.value.isInitialized) {
           controller!.initialize().then((_) {
             controller!.play();
+
+            if (widget.playClickAction != null) widget.playClickAction!();
             playPauseIconAnimationController!.forward();
           });
         } else {
@@ -481,6 +489,7 @@ class _MaterialControlsState extends State<MaterialControls>
           }
           playPauseIconAnimationController!.forward();
           controller!.play();
+          if (widget.playClickAction != null) widget.playClickAction!();
         }
       }
     });

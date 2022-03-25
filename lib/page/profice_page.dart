@@ -139,6 +139,17 @@ class _ProficePageState extends State<ProficePage>
                   "https://i0.hdslb.com/bfs/feed-admin/33ca4b820ff829d59561402bef3db08dbebc20cc.jpg",
                   "https://i0.hdslb.com/bfs/feed-admin/16af7c338b014f7a28775161506d9314d8e3ced1.png"
                 ],
+                title: "职场进阶",
+                subTitle: "带你突破技术瓶颈",
+              ),
+              CourseCard(
+                courseList: [
+                  "https://i0.hdslb.com/bfs/sycp/creative_img/202203/5d447362aa3168cfb3bd9ee5882324f9.jpg",
+                  "https://i0.hdslb.com/bfs/sycp/creative_img/202203/9480c0cb75f2580defb0d0d71ae6432d.jpg",
+                  "https://i0.hdslb.com/bfs/sycp/creative_img/202203/779f4ae0b92f75f62730d621881fdd5c.jpeg"
+                ],
+                title: "广告推广",
+                crossAxisCount: 1,
               )
             ],
           ),

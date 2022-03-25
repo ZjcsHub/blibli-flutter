@@ -7,7 +7,12 @@ import '../core/hi_adapter.dart';
 class DioAdapter extends HiNetAdapter {
   @override
   Future<HiNetResponse<T>> send<T>(BaseRequest request) async {
-    var response, option = Options(headers: request.header);
+    var response,
+        option = Options(
+            headers: request.header,
+            responseType: request.responseJson()
+                ? ResponseType.json
+                : ResponseType.bytes);
     var error;
     try {
       switch (request.httpMethod()) {

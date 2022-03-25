@@ -12,6 +12,10 @@ abstract class BaseRequest {
     return "api.devio.org";
   }
 
+  bool responseJson() {
+    return true;
+  }
+
   HttpMethod httpMethod();
 
   String path();

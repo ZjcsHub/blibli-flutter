@@ -1,11 +1,21 @@
 import 'package:blibli/util/view_util.dart';
+import 'package:blibli/widget/asperct_raio_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class CourseCard extends StatelessWidget {
   final List<String>? courseList;
-
-  const CourseCard({Key? key, this.courseList}) : super(key: key);
+  final String title;
+  final String subTitle;
+  final int crossAxisCount;
+  // final double mainAxisCellCount;
+  const CourseCard({
+    Key? key,
+    this.courseList,
+    this.title = "",
+    this.subTitle = "",
+    this.crossAxisCount = 2,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,12 +31,12 @@ class CourseCard extends StatelessWidget {
       child: Row(
         children: [
           Text(
-            "职场进阶",
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            title,
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           hiSpace(width: 10),
           Text(
-            "带你突破技术瓶颈",
+            subTitle,
             style: TextStyle(fontSize: 12, color: Colors.grey),
           )
         ],
@@ -36,7 +46,7 @@ class CourseCard extends StatelessWidget {
 
   _buildCardList(BuildContext context) {
     return StaggeredGrid.count(
-      crossAxisCount: 2,
+      crossAxisCount: crossAxisCount,
       mainAxisSpacing: 4,
       crossAxisSpacing: 4,
       children: _getShowData(context),
@@ -47,8 +57,18 @@ class CourseCard extends StatelessWidget {
     if (courseList == null) return [];
 
     return courseList?.map((e) {
-      return StaggeredGridTile.count(
-          crossAxisCellCount: 1, mainAxisCellCount: 0.7, child: cachedImage(e));
+      // return StaggeredGridTile.count(
+      //     crossAxisCellCount: 1,
+      //     mainAxisCellCount: mainAxisCellCount,
+      //     child: cachedImage(e));
+      return AsperctRaioImage.network(e, builder: (context, snapshot, url) {
+        double width = snapshot.data?.width.toDouble() ?? 1;
+        double height = snapshot.data?.height.toDouble() ?? 1;
+        return StaggeredGridTile.count(
+            crossAxisCellCount: 1,
+            mainAxisCellCount: height / width,
+            child: cachedImage(url));
+      });
     }).toList() as List<Widget>;
   }
 }

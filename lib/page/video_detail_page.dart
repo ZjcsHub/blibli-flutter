@@ -1,5 +1,8 @@
+import 'dart:convert';
 import 'dart:io';
+import 'package:blibli/barrage/hi_barrage.dart';
 import 'package:blibli/http/dao/home_dao.dart';
+import 'package:blibli/model/barrage_model.dart';
 import 'package:blibli/model/video_detail_model.dart';
 import 'package:blibli/model/video_play_model.dart';
 import 'package:blibli/navigator/hi_navigator.dart';
@@ -10,6 +13,7 @@ import 'package:blibli/widget/video_header.dart';
 import 'package:blibli/widget/video_large_card.dart';
 import 'package:blibli/widget/webview.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../model/video_data_model.dart';
 import '../widget/video_view.dart';
 import '../util/view_util.dart';
@@ -34,6 +38,9 @@ class _VideoDetailPageState extends State<VideoDetailPage>
 
   TabController? _controller;
   List tabs = ["简介", "评论288"];
+  List<BarrageModel>? barrageLists;
+
+  var _barragekey = GlobalKey<HiBarrageState>();
 
   @override
   void initState() {
@@ -64,6 +71,7 @@ class _VideoDetailPageState extends State<VideoDetailPage>
         _detailModel = result;
         setState(() {});
         _getVideoPlayData();
+        _getBarrageData();
       }
     } catch (e) {
       print(e);
@@ -83,6 +91,19 @@ class _VideoDetailPageState extends State<VideoDetailPage>
     } catch (e) {
       print(e);
     }
+  }
+
+  _getBarrageData() async {
+    rootBundle.loadString("json/barrage.json").then((value) {
+      List barrage = json.decode(value);
+      print("state:${_barragekey.currentState}");
+      setState(() {
+        barrageLists = barrage
+            .map((e) => BarrageModel(
+                e, _detailModel?.data?.view?.cid.toString() ?? "", 3000))
+            .toList();
+      });
+    });
   }
 
   @override
@@ -129,10 +150,22 @@ class _VideoDetailPageState extends State<VideoDetailPage>
 
   _videoView() {
     if (_playModel != null) {
+      var barrageUi = HiBarrage(
+        _playModel!.data?.videoCodecid?.toString() ?? "-1",
+        key: _barragekey,
+        barrageLists: barrageLists,
+      );
       return VideoView(
         _playModel!.data?.durl?.first.url ?? "",
         // cover: widget.videoModel?.pic,
         overlayUi: videoAppBar(),
+        barrageUi: barrageUi,
+        pauseCallBack: () {
+          _barragekey.currentState?.pause();
+        },
+        playCallBack: () {
+          _barragekey.currentState?.play();
+        },
       );
     } else {
       return Container(

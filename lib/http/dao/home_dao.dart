@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:blibli/http/request/video_barrage_request.dart';
 import 'package:blibli/http/request/video_detail_request.dart';
 import 'package:blibli/http/request/video_play_request.dart';
 import 'package:blibli/model/video_detail_model.dart';
@@ -6,6 +9,7 @@ import 'package:blibli/model/video_play_model.dart';
 import '../../model/video_data_model.dart';
 import '../core/hi_net.dart';
 import '../request/home_request.dart';
+import 'package:xml/xml.dart';
 
 class HomeDao {
   static get() async {
@@ -38,9 +42,22 @@ class HomeDao {
         .add("type", "mp4")
         .add("platform", "html5");
     var result = await HiNet.getInstance().fire(request);
-
+    print("result:$result");
     var model = VideoPlayModel.fromJson(result);
 
     return model;
+  }
+
+  static videoBarrage(int cid) async {
+    var request = VideoBarrageRequest();
+    request.add("oid", cid);
+    var result = await HiNet.getInstance().fire(request);
+    print("result:$result");
+    // var xmlString = String.fromCharCodes(result);
+    var xmlString = utf8.decode(result);
+    print(xmlString);
+    // var document = XmlDocument.parse(xmlString);
+    // var allD = document.findAllElements('d');
+    // print(allD);
   }
 }
