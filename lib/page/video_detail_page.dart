@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:blibli/barrage/barrage_input.dart';
 import 'package:blibli/barrage/hi_barrage.dart';
 import 'package:blibli/http/dao/home_dao.dart';
 import 'package:blibli/model/barrage_model.dart';
@@ -14,6 +15,7 @@ import 'package:blibli/widget/video_large_card.dart';
 import 'package:blibli/widget/webview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_overlay/flutter_overlay.dart';
 import '../model/video_data_model.dart';
 import '../widget/video_view.dart';
 import '../util/view_util.dart';
@@ -33,6 +35,7 @@ class _VideoDetailPageState extends State<VideoDetailPage>
     with TickerProviderStateMixin {
   var listener;
 
+  var _inputShowing = false;
   VideoDetailModel? _detailModel;
   VideoPlayModel? _playModel;
 
@@ -71,7 +74,7 @@ class _VideoDetailPageState extends State<VideoDetailPage>
         _detailModel = result;
         setState(() {});
         _getVideoPlayData();
-        _getBarrageData();
+        // _getBarrageData();
       }
     } catch (e) {
       print(e);
@@ -100,7 +103,7 @@ class _VideoDetailPageState extends State<VideoDetailPage>
       setState(() {
         barrageLists = barrage
             .map((e) => BarrageModel(
-                e, _detailModel?.data?.view?.cid.toString() ?? "", 3000))
+                e, _detailModel?.data?.view?.cid.toString() ?? "", 5000))
             .toList();
       });
     });
@@ -188,16 +191,7 @@ class _VideoDetailPageState extends State<VideoDetailPage>
         height: 45,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            _tabbar(),
-            Padding(
-              padding: EdgeInsets.only(right: 20),
-              child: Icon(
-                Icons.live_tv_rounded,
-                color: Colors.grey,
-              ),
-            )
-          ],
+          children: [_tabbar(), _buildBarrageBtn()],
         ),
       ),
     );
@@ -212,6 +206,29 @@ class _VideoDetailPageState extends State<VideoDetailPage>
       }).toList(),
       controller: _controller,
       fontSize: 15,
+    );
+  }
+
+  _buildBarrageBtn() {
+    return InkWell(
+      onTap: () {
+        HiOverlay.show(context, child: BarrageInput(
+          onTabClose: () {
+            _inputShowing = false;
+          },
+        )).then((value) {
+          print("--input:$value");
+          _barragekey.currentState?.send(BarrageModel(value ?? "",
+              _detailModel?.data?.view?.cid.toString() ?? "", 3000));
+        });
+      },
+      child: Padding(
+        padding: EdgeInsets.only(right: 20),
+        child: Icon(
+          Icons.live_tv_rounded,
+          color: Colors.grey,
+        ),
+      ),
     );
   }
 
