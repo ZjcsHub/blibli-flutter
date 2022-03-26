@@ -80,7 +80,7 @@ class BarrageInput extends StatelessWidget {
       TextEditingController editingController, BuildContext context) {
     return InkWell(
       onTap: () {
-        var text = editingController.text.trim() ?? "";
+        var text = editingController.text.trim();
         _send(text, context);
       },
       child: Container(

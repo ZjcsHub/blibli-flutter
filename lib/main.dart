@@ -1,12 +1,15 @@
 import 'package:blibli/generated/l10n.dart';
 import 'package:blibli/http/core/hi_error.dart';
 import 'package:blibli/http/dao/login_dao.dart';
+import 'package:blibli/provider/hi_provider.dart';
+import 'package:blibli/provider/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'navigator/hi_navigator.dart';
 import 'routers/routers.dart';
 import 'db/hi_cache.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'internationalization/Internation.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(const BiliApp());
@@ -45,26 +48,32 @@ class _BiliAppState extends State<BiliApp> {
                 ),
               );
 
-        return MaterialApp(
-          home: widget,
-          theme: ThemeData(
-            colorScheme: Theme.of(context).colorScheme.copyWith(
-                  primary: Colors.white, // appbar背景颜色
-                  onPrimary: Colors.black, // appbar文字颜色
-                  brightness: Brightness.light,
-                ),
+        // return
+
+        return MultiProvider(
+          providers: topProviders,
+          child: Consumer<ThemeProvider>(
+            builder: (BuildContext context, ThemeProvider themeProvider,
+                Widget? child) {
+              return MaterialApp(
+                home: widget,
+                theme: themeProvider.getTheme(context),
+                darkTheme: themeProvider.getTheme(context, isDarkMode: true),
+                themeMode: themeProvider.getThemeMode(),
+                // 国际化
+                localizationsDelegates: [
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate,
+                  S.delegate
+                ],
+                supportedLocales: S.delegate.supportedLocales,
+                localeResolutionCallback:
+                    (Locale? locale, Iterable<Locale> supportedLocales) {
+                  return locale;
+                },
+              );
+            },
           ),
-          // 国际化
-          localizationsDelegates: [
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            S.delegate
-          ],
-          supportedLocales: S.delegate.supportedLocales,
-          localeResolutionCallback:
-              (Locale? locale, Iterable<Locale> supportedLocales) {
-            return locale;
-          },
         );
       },
       // 进行初始化

@@ -19,9 +19,9 @@ class HiCache {
     return _instance!;
   }
 
-  HiCache() {
-    SharedPreferences.getInstance().then((value) => _preferences = value);
-  }
+  // HiCache() {
+  //   SharedPreferences.getInstance().then((value) => _preferences = value);
+  // }
 
   saveInteget(String key, int value) => _preferences?.setInt(key, value);
 
