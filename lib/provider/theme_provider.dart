@@ -1,5 +1,6 @@
 import 'package:blibli/db/hi_cache.dart';
 import 'package:blibli/util/color.dart';
+import 'package:blibli/util/view_util.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +10,19 @@ extension ThemeModeExtension on ThemeMode {
 
 class ThemeProvider extends ChangeNotifier {
   late ThemeMode _themeMode;
+
+  Color? appbarBackColor;
+  StatusStyle stateStyle = StatusStyle.Light;
+
+  // set appbarColor(color) {
+  //   appbarBackColor = color;
+  //   notifyListeners();
+  // }
+  //
+  // set appStateStyle(style) {
+  //   stateStyle = style;
+  //   notifyListeners();
+  // }
 
   /// 获取主题
   ThemeMode getThemeMode() {
@@ -24,12 +38,20 @@ class ThemeProvider extends ChangeNotifier {
         _themeMode = ThemeMode.light;
         break;
     }
+    appbarBackColor =
+        _themeMode == ThemeMode.dark ? HiColor.dark_bg : Colors.white;
+    stateStyle =
+        _themeMode == ThemeMode.dark ? StatusStyle.Light : StatusStyle.Dark;
     return _themeMode;
   }
 
   /// 设置主题
   setTheme(ThemeMode themeMode) {
     HiCache.getInstance().saveString("themeMode", themeMode.value);
+    appbarBackColor =
+        themeMode == ThemeMode.dark ? HiColor.dark_bg : Colors.white;
+    stateStyle =
+        themeMode == ThemeMode.dark ? StatusStyle.Light : StatusStyle.Dark;
     notifyListeners();
   }
 

@@ -7,6 +7,8 @@ import 'package:blibli/page/home_recommend_page.dart';
 import 'package:blibli/widget/hi_tab.dart';
 import 'package:blibli/widget/navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../provider/theme_provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -19,6 +21,7 @@ class _HomePageState extends HiState<HomePage>
     with AutomaticKeepAliveClientMixin, WidgetsBindingObserver {
   var listener;
 
+  var changeTheme = false;
   TabController? _controller;
 
   final List<Map> _tabValues = [
@@ -137,7 +140,12 @@ class _HomePageState extends HiState<HomePage>
           InkWell(
             onTap: () {
               print("点击");
-              HiNavigator.getInstance().onJumpTo(RouteStatus.login);
+              // HiNavigator.getInstance().onJumpTo(RouteStatus.login);
+              var themeProvider = context.read<ThemeProvider>();
+              themeProvider
+                  .setTheme(changeTheme ? ThemeMode.dark : ThemeMode.light);
+              setState(() {});
+              changeTheme = !changeTheme;
             },
             child: ClipRRect(
               borderRadius: BorderRadius.circular(23),
