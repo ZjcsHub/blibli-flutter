@@ -21,6 +21,8 @@ import '../widget/video_view.dart';
 import '../util/view_util.dart';
 import '../widget/expandable_content.dart';
 import '../widget/video_toolbar.dart';
+import 'package:provider/provider.dart';
+import '../provider/theme_provider.dart';
 
 class VideoDetailPage extends StatefulWidget {
   final VideoData? videoModel;
@@ -45,6 +47,8 @@ class _VideoDetailPageState extends State<VideoDetailPage>
 
   var _barragekey = GlobalKey<HiBarrageState>();
 
+  HiBarrage? barrageUi;
+
   @override
   void initState() {
     super.initState();
@@ -59,7 +63,12 @@ class _VideoDetailPageState extends State<VideoDetailPage>
       if (widget == pre?.page || pre?.page is VideoDetailPage) {
         print("videodetail：onPause");
         // 恢复nav
-        setStatusBar(Colors.white, StatusStyle.Dark);
+
+        var themeProvider = Provider.of<ThemeProvider>(context, listen: false);
+        var setColor = themeProvider.appbarBackColor ?? Colors.black;
+        var setStateStyle = themeProvider.stateStyle;
+
+        setStatusBar(setColor, setStateStyle);
       }
     };
     HiNavigator.getInstance().addListener(this.listener);
@@ -111,7 +120,8 @@ class _VideoDetailPageState extends State<VideoDetailPage>
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    print("video page dispose");
+
     super.dispose();
     HiNavigator.getInstance().removeListener(this.listener);
     _controller?.dispose();
@@ -153,11 +163,13 @@ class _VideoDetailPageState extends State<VideoDetailPage>
 
   _videoView() {
     if (_playModel != null) {
-      var barrageUi = HiBarrage(
-        _playModel!.data?.videoCodecid?.toString() ?? "-1",
-        key: _barragekey,
-        barrageLists: barrageLists,
-      );
+      if (barrageUi == null) {
+        barrageUi = HiBarrage(
+          _playModel!.data?.videoCodecid?.toString() ?? "-1",
+          key: _barragekey,
+          barrageLists: barrageLists,
+        );
+      }
       return VideoView(
         _playModel!.data?.durl?.first.url ?? "",
         // cover: widget.videoModel?.pic,

@@ -14,16 +14,6 @@ class ThemeProvider extends ChangeNotifier {
   Color? appbarBackColor;
   StatusStyle stateStyle = StatusStyle.Light;
 
-  // set appbarColor(color) {
-  //   appbarBackColor = color;
-  //   notifyListeners();
-  // }
-  //
-  // set appStateStyle(style) {
-  //   stateStyle = style;
-  //   notifyListeners();
-  // }
-
   /// 获取主题
   ThemeMode getThemeMode() {
     String theme = HiCache.getInstance().getString("themeMode");
@@ -38,6 +28,7 @@ class ThemeProvider extends ChangeNotifier {
         _themeMode = ThemeMode.light;
         break;
     }
+    // _themeMode = ThemeMode.dark;
     appbarBackColor =
         _themeMode == ThemeMode.dark ? HiColor.dark_bg : Colors.white;
     stateStyle =
@@ -48,10 +39,10 @@ class ThemeProvider extends ChangeNotifier {
   /// 设置主题
   setTheme(ThemeMode themeMode) {
     HiCache.getInstance().saveString("themeMode", themeMode.value);
-    appbarBackColor =
-        themeMode == ThemeMode.dark ? HiColor.dark_bg : Colors.white;
-    stateStyle =
-        themeMode == ThemeMode.dark ? StatusStyle.Light : StatusStyle.Dark;
+    // appbarBackColor =
+    //     themeMode == ThemeMode.dark ? HiColor.dark_bg : Colors.white;
+    // stateStyle =
+    //     themeMode == ThemeMode.dark ? StatusStyle.Light : StatusStyle.Dark;
     notifyListeners();
   }
 

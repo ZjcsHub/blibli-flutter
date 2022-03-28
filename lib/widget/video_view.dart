@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:orientation/orientation.dart';
 import 'package:video_player/video_player.dart';
 import 'cutom_video_controller.dart' as CutomController;
+import '../platform_channels/platform_channels.dart';
 
 class VideoView extends StatefulWidget {
   final String url;
@@ -38,11 +39,24 @@ class VideoView extends StatefulWidget {
 class _VideoViewState extends State<VideoView> {
   VideoPlayerController? videoPlayerController;
   ChewieController? chewieController;
+
+  static var platform = MethodChannel(PlatFormChannels.screenKey);
+
   @override
   void initState() {
     super.initState();
     print("widget.cover:${widget.cover}");
     initializePlayer();
+    // 监听屏幕旋转
+    platform.invokeMethod("screenRotation").then((value) {
+      print("flutter 屏幕旋转:$value");
+      if (value is int) {
+        if (value == 4 || value == 3) {
+          // 旋转进入全屏
+          chewieController?.enterFullScreen();
+        }
+      }
+    });
   }
 
   // 封面
@@ -85,7 +99,7 @@ class _VideoViewState extends State<VideoView> {
           playClickAction: widget.playCallBack,
           pauseClickAction: widget.pauseCallBack,
         ));
-    chewieController?.addListener(_videoListener);
+    chewieController!.addListener(_videoListener);
     setState(() {});
   }
 
@@ -99,8 +113,14 @@ class _VideoViewState extends State<VideoView> {
 
   _videoListener() {
     Size size = MediaQuery.of(context).size;
+    print("video listen:$size");
+
     if (size.width > size.height) {
       print("size.width:${size.width},size.height:${size.height}");
+      if (!chewieController!.isFullScreen) {
+        // chewieController?.enterFullScreen();
+        // return;
+      }
       OrientationPlugin.forceOrientation(DeviceOrientation.portraitUp);
     }
   }
@@ -110,6 +130,7 @@ class _VideoViewState extends State<VideoView> {
     var contSize = MediaQuery.of(context).size;
     double screenWidth = contSize.width;
     double playerHeight = screenWidth / widget.aspectRatio;
+    print("video_view, build");
     return Container(
       width: screenWidth,
       height: playerHeight,

@@ -82,7 +82,8 @@ class NavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // 获取provider
-    var themeProvider = context.read<ThemeProvider>();
+    var themeProvider = Provider.of<ThemeProvider>(context);
+    ;
     var setColor = color ?? Colors.black;
     var setStateStyle = statusStyle ?? StatusStyle.Light;
     if (color == null || statusStyle == null) {
