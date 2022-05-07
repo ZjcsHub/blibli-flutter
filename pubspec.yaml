@@ -38,7 +38,7 @@ dependencies:
   cupertino_icons: ^1.0.2 # 图标
   dio: ^4.0.4 # 网络请求
   shared_preferences: ^2.0.13 # 本地缓存
-  #ffluttertoast: ^8.0.9 # 提示弹框
+  #fluttertoast: ^8.0.9 # 提示弹框
   flutter_swiper: ^1.1.6 # 轮播图
   event_bus: ^2.0.0 # 事件监听
   status_bar_control: ^3.2.1 # 状态栏
@@ -54,10 +54,22 @@ dependencies:
   web_socket_channel: ^2.1.0
   xml: ^5.3.1
   flutter_overlay: ^1.0.0
+  flutter_smart_dialog: ^3.4.0+2
+  flutter_nested: ^1.0.0
 
+#解决依赖冲突
+#dependency_overrides:
+#  archive: 3.0.0
+
+# 单元测试
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+  #集成测试
+  integration_test:
+    sdk: flutter
+
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

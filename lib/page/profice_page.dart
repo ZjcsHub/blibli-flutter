@@ -1,8 +1,10 @@
 import 'dart:convert';
 
 import 'package:blibli/model/video_data_model.dart';
+import 'package:blibli/navigator/hi_navigator.dart';
 import 'package:blibli/util/view_util.dart';
 import 'package:blibli/widget/course_card.dart';
+import 'package:blibli/widget/darkmode_item.dart';
 import 'package:blibli/widget/flex_header.dart';
 import 'package:blibli/widget/hi_banner.dart';
 import 'package:blibli/widget/hi_blur.dart';
@@ -150,7 +152,10 @@ class _ProficePageState extends State<ProficePage>
                 ],
                 title: "广告推广",
                 crossAxisCount: 1,
-              )
+              ),
+              DarkModeItem(onclick: () {
+                HiNavigator.getInstance().onJumpTo(RouteStatus.darkMode);
+              })
             ],
           ),
         ));

@@ -3,6 +3,7 @@ import 'package:blibli/util/color.dart';
 import 'package:blibli/util/view_util.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 
 extension ThemeModeExtension on ThemeMode {
   String get value => ['system', 'light', 'dark'][index];
@@ -13,6 +14,32 @@ class ThemeProvider extends ChangeNotifier {
 
   Color? appbarBackColor;
   StatusStyle stateStyle = StatusStyle.Light;
+
+  bool isDarkMode() {
+    var isDark = false;
+    if (_themeMode == ThemeMode.system) {
+      // 系统darkmode
+      var systemBrightness =
+          SchedulerBinding.instance?.window.platformBrightness ==
+              Brightness.dark;
+      isDark = systemBrightness;
+    } else {
+      isDark = _themeMode == ThemeMode.dark;
+    }
+    return isDark;
+  }
+
+  var _platFormBrightness =
+      SchedulerBinding.instance?.window.platformBrightness;
+
+  void darModeChange() {
+    if (_platFormBrightness !=
+        SchedulerBinding.instance?.window.platformBrightness) {
+      _platFormBrightness =
+          SchedulerBinding.instance?.window.platformBrightness;
+      notifyListeners();
+    }
+  }
 
   /// 获取主题
   ThemeMode getThemeMode() {
@@ -28,11 +55,11 @@ class ThemeProvider extends ChangeNotifier {
         _themeMode = ThemeMode.light;
         break;
     }
-    // _themeMode = ThemeMode.dark;
-    appbarBackColor =
-        _themeMode == ThemeMode.dark ? HiColor.dark_bg : Colors.white;
-    stateStyle =
-        _themeMode == ThemeMode.dark ? StatusStyle.Light : StatusStyle.Dark;
+    // _themeMode = ThemeMode.system;
+    var isDark = isDarkMode();
+    appbarBackColor = isDark ? HiColor.dark_bg : Colors.white;
+    stateStyle = isDark ? StatusStyle.Light : StatusStyle.Dark;
+
     return _themeMode;
   }
 

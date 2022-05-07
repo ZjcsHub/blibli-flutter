@@ -22,4 +22,8 @@ class Internation {
   String Favorite(BuildContext context) {
     return S.of(context).ranking_favorite;
   }
+
+  String ThemeTitle(BuildContext context) {
+    return S.of(context).theme_title;
+  }
 }

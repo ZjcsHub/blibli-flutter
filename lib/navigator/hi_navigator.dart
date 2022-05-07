@@ -1,4 +1,5 @@
 import 'package:blibli/http/dao/login_dao.dart';
+import 'package:blibli/page/darkmode_page.dart';
 import 'package:blibli/page/login_page.dart';
 import 'package:blibli/page/register_page.dart';
 import 'package:blibli/page/video_detail_page.dart';
@@ -24,7 +25,7 @@ int getPageIndex(List<MaterialPage> pages, RouteStatus routeStatus) {
 }
 
 /// 自定义路由封装，路由状态
-enum RouteStatus { login, registration, home, detail, unknown }
+enum RouteStatus { login, registration, home, detail, unknown, darkMode }
 
 /// 获取page对应的RouteStatus
 RouteStatus getStatus(MaterialPage page) {
@@ -36,6 +37,8 @@ RouteStatus getStatus(MaterialPage page) {
     return RouteStatus.home;
   } else if (page.child is VideoDetailPage) {
     return RouteStatus.detail;
+  } else if (page.child is DarkModePage) {
+    return RouteStatus.darkMode;
   }
   return RouteStatus.unknown;
 }
@@ -112,6 +115,8 @@ class BiliRouterDelegate extends RouterDelegate<BiliRouthPath>
       page = pageWrap(RegisterPage());
     } else if (_routeStatus == RouteStatus.login) {
       page = pageWrap(LoginPage());
+    } else if (_routeStatus == RouteStatus.darkMode) {
+      page = pageWrap(DarkModePage());
     }
     tempPages = [...tempPages, page];
     // 通知路由变化

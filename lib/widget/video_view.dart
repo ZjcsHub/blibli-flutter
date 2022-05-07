@@ -48,15 +48,15 @@ class _VideoViewState extends State<VideoView> {
     print("widget.cover:${widget.cover}");
     initializePlayer();
     // 监听屏幕旋转
-    platform.invokeMethod("screenRotation").then((value) {
-      print("flutter 屏幕旋转:$value");
-      if (value is int) {
-        if (value == 4 || value == 3) {
-          // 旋转进入全屏
-          chewieController?.enterFullScreen();
-        }
-      }
-    });
+    // platform.invokeMethod("screenRotation").then((value) {
+    //   print("flutter 屏幕旋转:$value");
+    //   if (value is int) {
+    //     if (value == 4 || value == 3) {
+    //       // 旋转进入全屏
+    //       chewieController?.enterFullScreen();
+    //     }
+    //   }
+    // });
   }
 
   // 封面

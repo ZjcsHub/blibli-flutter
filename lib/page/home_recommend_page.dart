@@ -1,8 +1,10 @@
 import 'package:blibli/EventBus/event_notification.dart';
 import 'package:blibli/core/hi_state.dart';
 import 'package:blibli/navigator/hi_navigator.dart';
+import 'package:blibli/util/view_util.dart';
 import 'package:blibli/widget/hi_refresh.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_nested/flutter_nested.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import '../model/video_data_model.dart';
 import '../widget/hi_banner.dart';
@@ -50,6 +52,11 @@ class _HomeRecommendPageState extends HiState<HomeRecommendPage>
   }
 
   _contentViewData() {
+    return _forthBuildSecondView();
+  }
+
+  // 第一种建造模式
+  _firstBuildView() {
     return HiRefresh(
       SingleChildScrollView(
         padding: EdgeInsets.only(top: 5, left: 8, right: 8),
@@ -64,6 +71,10 @@ class _HomeRecommendPageState extends HiState<HomeRecommendPage>
         print("执行操作");
       },
     );
+  }
+
+  // 第二种建造模式，但是下拉时header不会随着下拉
+  _secondBuildView() {
     return Container(
       padding: EdgeInsets.only(left: 4, right: 4),
       child: CustomScrollView(
@@ -88,6 +99,72 @@ class _HomeRecommendPageState extends HiState<HomeRecommendPage>
           )
         ],
       ),
+    );
+  }
+
+  _thirdBuildView() {
+    return GridView.custom(
+        gridDelegate: SliverWovenGridDelegate.count(
+          crossAxisCount: 2,
+          mainAxisSpacing: 4,
+          crossAxisSpacing: 4,
+          pattern: [
+            WovenGridTile(1.2),
+            WovenGridTile(1.2),
+          ],
+        ),
+        childrenDelegate: SliverChildBuilderDelegate((context, index) {
+          if (index > widget.bannerList.length) return null;
+          return VideoCard(
+            videoData: widget.bannerList[index],
+            valueChanged: (videoModel) {
+              print("点击 ${videoModel}");
+              HiNavigator.getInstance()
+                  .onJumpTo(RouteStatus.detail, args: videoModel);
+            },
+          );
+        }));
+  }
+
+  _forthBuildView() {
+    return MasonryGridView.count(
+      crossAxisCount: 2,
+      itemBuilder: (context, index) {
+        return VideoCard(
+          videoData: widget.bannerList[index],
+          valueChanged: (videoModel) {
+            print("点击 ${videoModel}");
+            HiNavigator.getInstance()
+                .onJumpTo(RouteStatus.detail, args: videoModel);
+          },
+        );
+      },
+      mainAxisSpacing: 4,
+      crossAxisSpacing: 4,
+      itemCount: widget.bannerList.length,
+    );
+  }
+
+  _forthBuildSecondView() {
+    // return HiNestedScrollView
+    return HiNestedScrollView(
+      headers: [
+        if (!widget.bannerList.isEmpty) _banner(),
+        SizedBox(height: 10)
+      ],
+      itemCount: widget.bannerList.length,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2, childAspectRatio: 1.2),
+      itemBuilder: (BuildContext context, int index) {
+        return VideoCard(
+          videoData: widget.bannerList[index],
+          valueChanged: (videoModel) {
+            print("点击 ${videoModel}");
+            HiNavigator.getInstance()
+                .onJumpTo(RouteStatus.detail, args: videoModel);
+          },
+        );
+      },
     );
   }
 

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:blibli/EventBus/event_notification.dart';
 import 'package:blibli/core/hi_state.dart';
 import 'package:blibli/http/dao/home_dao.dart';
@@ -80,6 +82,13 @@ class _HomePageState extends HiState<HomePage>
   }
 
   @override
+  void didChangePlatformBrightness() {
+    context.read<ThemeProvider>().darModeChange();
+    super.didChangePlatformBrightness();
+    // 系统改变了黑夜模式
+  }
+
+  @override
   void dispose() {
     super.dispose();
     HiNavigator.getInstance().removeListener(this.listener);
@@ -141,11 +150,12 @@ class _HomePageState extends HiState<HomePage>
             onTap: () {
               print("点击");
               // HiNavigator.getInstance().onJumpTo(RouteStatus.login);
-              var themeProvider = context.read<ThemeProvider>();
-              themeProvider
-                  .setTheme(changeTheme ? ThemeMode.dark : ThemeMode.light);
-              setState(() {});
-              changeTheme = !changeTheme;
+              // var themeProvider = context.read<ThemeProvider>();
+              // themeProvider
+              //     .setTheme(changeTheme ? ThemeMode.dark : ThemeMode.light);
+              // setState(() {});
+              // changeTheme = !changeTheme;
+              _catchError();
             },
             child: ClipRRect(
               borderRadius: BorderRadius.circular(23),
@@ -196,4 +206,15 @@ class _HomePageState extends HiState<HomePage>
 
   @override
   bool get wantKeepAlive => true;
+
+  _catchError() {
+    runZonedGuarded(() {
+      throw StateError('runZonedGuarded:THis is a dart exception');
+    }, (e, s) => print(e));
+
+    runZonedGuarded(() {
+      Future.delayed(Duration(seconds: 1)).then((value) => throw StateError(
+          "runZonedGuarded:THis is a dart exception in future"));
+    }, (e, s) => print(e));
+  }
 }

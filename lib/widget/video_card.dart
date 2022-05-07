@@ -29,7 +29,7 @@ class VideoCard extends StatelessWidget {
       // ),
       child: Card(
         // 取消卡片边距
-        margin: EdgeInsets.only(left: 4, right: 4, bottom: 8),
+        // margin: EdgeInsets.only(left: 4, right: 4, bottom: 8),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(5),
           child: Column(
@@ -42,8 +42,8 @@ class VideoCard extends StatelessWidget {
   }
 
   _itemImage(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    print("size : $size");
+    final sizeWidth = MediaQuery.of(context).size.width;
+    print("size : $sizeWidth");
     return Stack(
       children: [
         // FadeInImage.memoryNetwork(
@@ -55,7 +55,7 @@ class VideoCard extends StatelessWidget {
         //   fit: BoxFit.cover,
         // ),
         cachedImage(this.videoData?.pic ?? "",
-            height: size.width / 2 * 0.43, width: size.width / 2),
+            height: sizeWidth / 2 * 0.43, width: sizeWidth / 2),
         Positioned(
           child: Container(
             padding: EdgeInsets.only(left: 8, right: 8, bottom: 3, top: 5),
@@ -126,6 +126,14 @@ class VideoCard extends StatelessWidget {
         ],
       ),
     ));
+    return Container(
+      padding: EdgeInsets.only(top: 5, left: 8, right: 8),
+      child: Text(
+        this.videoData?.title ?? "",
+        maxLines: 2,
+        style: TextStyle(fontSize: 15),
+      ),
+    );
   }
 
   _owner() {

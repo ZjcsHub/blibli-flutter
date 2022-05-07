@@ -2,7 +2,8 @@ import 'package:blibli/util/view_util.dart';
 import 'package:flutter/material.dart';
 
 // 自定义顶部appbar
-appBar(String title, String rightTitle, VoidCallback rightButtonClick) {
+appBar(String title, String rightTitle, VoidCallback rightButtonClick,
+    {Key? key}) {
   return AppBar(
     centerTitle: false,
     titleSpacing: 0,
@@ -13,6 +14,7 @@ appBar(String title, String rightTitle, VoidCallback rightButtonClick) {
     ),
     actions: [
       InkWell(
+        key: key,
         onTap: rightButtonClick,
         child: Container(
           padding: EdgeInsets.only(left: 15, right: 15),

@@ -24,6 +24,7 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "ranking_favorite": MessageLookupByLibrary.simpleMessage("收藏"),
         "ranking_hot": MessageLookupByLibrary.simpleMessage("最新"),
-        "ranking_like": MessageLookupByLibrary.simpleMessage("最热")
+        "ranking_like": MessageLookupByLibrary.simpleMessage("最热"),
+        "theme_title": MessageLookupByLibrary.simpleMessage("主题")
       };
 }

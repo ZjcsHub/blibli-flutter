@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:blibli/generated/l10n.dart';
 import 'package:blibli/http/core/hi_error.dart';
 import 'package:blibli/http/dao/login_dao.dart';
 import 'package:blibli/provider/hi_provider.dart';
 import 'package:blibli/provider/theme_provider.dart';
+import 'package:blibli/util/defind.dart';
 import 'package:flutter/material.dart';
 import 'navigator/hi_navigator.dart';
 import 'routers/routers.dart';
@@ -12,7 +15,7 @@ import 'internationalization/Internation.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const BiliApp());
+  HiDefend().run(BiliApp());
 }
 
 class BiliApp extends StatefulWidget {

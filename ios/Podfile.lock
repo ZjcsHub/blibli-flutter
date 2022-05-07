@@ -3,6 +3,8 @@ PODS:
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
+  - integration_test (0.0.1):
+    - Flutter
   - orientation (0.0.1):
     - Flutter
   - path_provider_ios (0.0.1):
@@ -25,6 +27,7 @@ PODS:
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
+  - integration_test (from `.symlinks/plugins/integration_test/ios`)
   - orientation (from `.symlinks/plugins/orientation/ios`)
   - path_provider_ios (from `.symlinks/plugins/path_provider_ios/ios`)
   - shared_preferences_ios (from `.symlinks/plugins/shared_preferences_ios/ios`)
@@ -42,6 +45,8 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
+  integration_test:
+    :path: ".symlinks/plugins/integration_test/ios"
   orientation:
     :path: ".symlinks/plugins/orientation/ios"
   path_provider_ios:
@@ -64,6 +69,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
+  integration_test: 7db6d89f336f671dcbc7563ee27a5b08f6f8aee1
   orientation: 6c9203efe86ce4cff379756910f18b2d745628c3
   path_provider_ios: 7d7ce634493af4477d156294792024ec3485acd5
   shared_preferences_ios: aef470a42dc4675a1cdd50e3158b42e3d1232b32
